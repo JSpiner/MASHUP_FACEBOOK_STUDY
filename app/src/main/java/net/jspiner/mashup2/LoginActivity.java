@@ -21,10 +21,17 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
+import java.io.IOException;
 import java.security.MessageDigest;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -96,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         Log.i("TAG,", "onSuccess");
-                        onLoginSuccess();
+                        requestLogin();
                     }
 
                     @Override
@@ -117,6 +124,37 @@ public class LoginActivity extends AppCompatActivity {
             findViewById(R.id.login_button).setVisibility(View.GONE);
             startMainActivityWithDelay();
         }
+    }
+
+    private void requestLogin() {
+        Profile profile = Profile.getCurrentProfile();
+        Log.i("TAG", "profile : " + profile.getName());
+        NetworkRequest.requestLogin(
+                profile.getId(),
+                profile.getName(),
+                profile.getProfilePictureUri(500, 500).toString(),
+                new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                onLoginError();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                onLoginSuccess();
+                            }
+                        });
+                    }
+                }
+        );
     }
 
     private void onLoginSuccess() {
@@ -143,6 +181,7 @@ public class LoginActivity extends AppCompatActivity {
     private void startMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override

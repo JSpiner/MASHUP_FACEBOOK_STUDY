@@ -19,6 +19,10 @@ android {
     repositories {
         jcenter()
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -42,6 +46,14 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:26.1.0'
 
     // design support
-    compile 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:design:26.1.0'
+
+    // network library
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+
+    // parsing library
+    compile 'com.google.code.gson:gson:2.8.4'
+
 
 }
