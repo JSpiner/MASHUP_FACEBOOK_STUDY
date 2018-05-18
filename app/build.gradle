@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "net.jspiner.mashup2"
-        minSdkVersion 25
+        minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
