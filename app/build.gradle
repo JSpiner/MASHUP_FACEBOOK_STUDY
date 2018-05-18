@@ -37,4 +37,11 @@ dependencies {
 
     // facebook sdk
     implementation 'com.facebook.android:facebook-login:[4,5)'
+
+    // recyclerview
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+
+    // design support
+    compile 'com.android.support:design:26.1.0'
+
 }
