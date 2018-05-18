@@ -41,19 +41,21 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="정성민"
                         android:textColor="#2f2f2f"
                         android:textSize="15dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="정성민" />
 
                     <TextView
+                        android:id="@+id/date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2018년 5월 18일 15:23"
                         android:textColor="#9f9f9f"
-                        android:textSize="12dp" />
+                        android:textSize="12dp"
+                        tools:text="2018년 5월 18일 15:23" />
 
                 </LinearLayout>
 
@@ -61,6 +63,7 @@
 
             <!-- 본문 -->
             <TextView
+                android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -68,18 +71,19 @@
                 android:layout_marginTop="15dp"
                 android:ellipsize="end"
                 android:maxLines="7"
-                android:text="사랑의 구할 우리 쓸쓸한 열락의 넣는 쓸쓸하랴? 기관과 우리의 충분히 소담스러운 이상이 가치를 하여도 찬미를 쓸쓸하랴? 사랑의 미인을 천하를 피부가 이상의 것이다. 우리 이것은 그것을 원질이 그들을 봄바람이다. 우리 쓸쓸한 하는 가는 있으며, 바이며, 용감하고 미인을 같이, 뿐이다. 생의 작고 이상은 피는 무엇을 찾아다녀도, 인류의 있는 철환하였는가? 그들에게 갑 피고, 보는 구하지 때에, 보라. 없으면, 평화스러운 인간에 가진 있음으로써 칼이다. 안고, 일월과 풀밭에 사라지지 얼마나 따뜻한 운다."
                 android:textColor="#2f2f2f"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                tools:text="사랑의 구할 우리 쓸쓸한 열락의 넣는 쓸쓸하랴? 기관과 우리의 충분히 소담스러운 이상이 가치를 하여도 찬미를 쓸쓸하랴? 사랑의 미인을 천하를 피부가 이상의 것이다. 우리 이것은 그것을 원질이 그들을 봄바람이다. 우리 쓸쓸한 하는 가는 있으며, 바이며, 용감하고 미인을 같이, 뿐이다. 생의 작고 이상은 피는 무엇을 찾아다녀도, 인류의 있는 철환하였는가? 그들에게 갑 피고, 보는 구하지 때에, 보라. 없으면, 평화스러운 인간에 가진 있음으로써 칼이다. 안고, 일월과 풀밭에 사라지지 얼마나 따뜻한 운다." />
 
             <ImageView
+                android:id="@+id/content_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:adjustViewBounds="true"
                 android:maxHeight="150dp"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/ic_launcher" />
+                tools:src="@mipmap/ic_launcher" />
 
             <View
                 android:layout_width="match_parent"

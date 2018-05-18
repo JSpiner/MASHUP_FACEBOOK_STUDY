@@ -1,9 +1,11 @@
 package net.jspiner.mashup2;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -29,9 +31,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-        initRecyclerView();
+        initViews();
 
         requestPostList();
+    }
+
+    private void initViews() {
+        initRecyclerView();
+        findViewById(R.id.write).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startWriteActivity();
+            }
+        });
     }
 
     private void initRecyclerView() {
@@ -40,13 +52,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(postAdapter);
-
-        ArrayList<Post> test = new ArrayList<>();
-        test.add(new Post());
-        test.add(new Post());
-        test.add(new Post());
-
-        postAdapter.setData(test);
     }
 
     private void requestPostList() {
@@ -79,5 +84,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void onLoaded(ArrayList<Post> postList) {
         postAdapter.setData(postList);
+    }
+
+    private void startWriteActivity() {
+        Intent intent = new Intent(this, WriteActivity.class);
+        startActivity(intent);
     }
 }

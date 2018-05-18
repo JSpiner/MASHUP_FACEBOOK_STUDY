@@ -1,8 +1,12 @@
 package net.jspiner.mashup2;
 
+import java.io.File;
+
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -54,6 +58,30 @@ public final class NetworkRequest {
                 .build();
 
         getHttpClient().newCall(request).enqueue(callback);
+    }
+
+    public static void requestWritePost(String userId, String content, File file, Callback callback) {
+        HttpUrl httpUrl = HttpUrl.parse(API_URL).newBuilder()
+                .addEncodedPathSegment("/api/post")
+                .build();
+
+        RequestBody body = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("user_facebook_id", userId)
+                .addFormDataPart("content", content)
+                .addFormDataPart(
+                        "image",
+                        file.getName(),
+                        RequestBody.create(MediaType.parse("image/png"), file)
+                ).build();
+
+        Request request = new Request.Builder()
+                .url(httpUrl)
+                .post(body)
+                .build();
+
+        getHttpClient().newCall(request).enqueue(callback);
+
     }
 
 }
