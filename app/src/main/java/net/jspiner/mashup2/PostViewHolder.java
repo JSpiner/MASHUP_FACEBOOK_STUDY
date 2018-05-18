@@ -10,6 +10,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class PostViewHolder extends RecyclerView.ViewHolder {
 
     private Context context;
@@ -28,20 +31,30 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
         date = itemView.findViewById(R.id.date);
         content = itemView.findViewById(R.id.content);
         contentImage = itemView.findViewById(R.id.content_image);
+
+        itemView.findViewById(R.id.like).setOnClickListener(__ -> {});
+        itemView.findViewById(R.id.comment).setOnClickListener(__ -> {});
+        itemView.findViewById(R.id.share).setOnClickListener(__ -> {});
     }
 
     public void setData(Post post) {
-        Log.i("TAG", "post : " + new Gson().toJson(post));
         Glide.with(context)
                 .load(post.writer.profileImage)
                 .into(profileImage);
 
         name.setText(post.writer.name);
+        date.setText(timestampToDate(post.date));
         content.setText(post.content);
 
         Glide.with(context)
                 .load(NetworkRequest.API_URL + post.contentImage)
                 .into(contentImage);
+    }
+
+    private String timestampToDate(long timestamp) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
+        Date netDate = (new Date(timestamp * 1000l));
+        return sdf.format(netDate);
     }
 
 }
