@@ -75,6 +75,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                if (response.code() != 200) {
+                    onLoadError();
+                    return;
+                }
                 ArrayList<Post> postList = new Gson().fromJson(
                         response.body().string(),
                         new TypeToken<ArrayList<Post>>(){}.getType()
@@ -91,10 +95,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onLoadError() {
-
+        findViewById(R.id.network_error).setVisibility(View.VISIBLE);
     }
 
     private void onLoaded(ArrayList<Post> postList) {
+        findViewById(R.id.network_error).setVisibility(View.GONE);
         postAdapter.setData(postList);
     }
 

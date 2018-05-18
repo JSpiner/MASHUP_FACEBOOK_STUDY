@@ -23,6 +23,37 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <FrameLayout
+            android:id="@+id/network_error"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/face_down" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:text="서버 에러가 발생하였습니다.\n 잠시후 다시 시도해주세요"
+                    android:textColor="#2f2f2f"
+                    android:textSize="15dp" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/write"
             android:layout_width="wrap_content"
