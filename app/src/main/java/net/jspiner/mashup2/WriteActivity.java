@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,8 +15,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -57,6 +60,7 @@ public class WriteActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        initToolbar();
         content = findViewById(R.id.content);
         findViewById(R.id.write).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +74,17 @@ public class WriteActivity extends AppCompatActivity {
                 startGalleryActivity();
             }
         });
+    }
+
+    private void initToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        getSupportActionBar().setTitle("글 작성하기");
+        toolbar.setTitleTextColor(Color.WHITE);
     }
 
     private void checkValidation() {
@@ -182,5 +197,14 @@ public class WriteActivity extends AppCompatActivity {
         }
         cursor.close();
         return resourcePath;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
