@@ -9,6 +9,6 @@ public class Writer {
 
     public String name;
 
-    @SerializedName("profileImage")
+    @SerializedName("profile_image")
     public String profileImage;
 }

@@ -81,7 +81,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:adjustViewBounds="true"
-                android:maxHeight="150dp"
+                android:maxHeight="250dp"
+                android:minHeight="150dp"
                 android:scaleType="centerCrop"
                 tools:src="@mipmap/ic_launcher" />
 

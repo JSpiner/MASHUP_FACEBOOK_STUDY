@@ -14,13 +14,13 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 public final class NetworkRequest {
 
-    private static final String API_URL = "http://52.78.84.8:5000";
+    public static final String API_URL = "http://52.78.84.8:5000";
     private static OkHttpClient httpClient;
 
     public static OkHttpClient getHttpClient() {
         if (httpClient == null) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-            logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
             httpClient = new OkHttpClient.Builder()
                     .addInterceptor(logging)
