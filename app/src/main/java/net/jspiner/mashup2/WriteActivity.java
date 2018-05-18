@@ -24,20 +24,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.facebook.Profile;
-import com.google.gson.Gson;
-import com.zhihu.matisse.Matisse;
-import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.engine.impl.GlideEngine;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 public class WriteActivity extends AppCompatActivity {
 
@@ -88,43 +77,11 @@ public class WriteActivity extends AppCompatActivity {
     }
 
     private void checkValidation() {
-        String contentText = content.getText().toString();
-        if (TextUtils.isEmpty(contentText) || image == null) {
-            Toast.makeText(getBaseContext(), "값을 입력해주세요", Toast.LENGTH_SHORT).show();
-        } else {
-            requestWritePost();
-        }
+        requestWritePost();
     }
 
     private void requestWritePost() {
-        Profile profile = Profile.getCurrentProfile();
-
-        NetworkRequest.requestWritePost(
-                profile.getId(),
-                content.getText().toString(),
-                image,
-                new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                onWriteError();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                onWriteSuccess();
-                            }
-                        });
-                    }
-                }
-        );
+        onWriteError();
     }
 
     private void onWriteError() {
@@ -138,13 +95,7 @@ public class WriteActivity extends AppCompatActivity {
 
     private void startGalleryActivity() {
         if (isPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            Matisse.from(this)
-                    .choose(MimeType.allOf())
-                    .countable(true)
-                    .maxSelectable(1)
-                    .thumbnailScale(0.85f)
-                    .imageEngine(new GlideEngine())
-                    .forResult(GALLERY_INTENT_CODE);
+
         } else {
             ActivityCompat.requestPermissions(
                     this,
@@ -167,11 +118,6 @@ public class WriteActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == Activity.RESULT_OK && requestCode == GALLERY_INTENT_CODE) {
-            List<Uri> uriList = Matisse.obtainResult(data);
-            onGalleryImageReceived(uriList.get(0));
-        }
     }
 
     private void onGalleryImageReceived(Uri uri) {

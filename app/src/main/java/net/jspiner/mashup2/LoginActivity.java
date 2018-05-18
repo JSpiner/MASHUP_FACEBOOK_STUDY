@@ -17,28 +17,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.Profile;
-import com.facebook.ProfileTracker;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-
 import java.io.IOException;
 import java.security.MessageDigest;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
     private static final int ACTIVITY_START_DELAY_MILLIS = 1000 * 3;
 
     private Handler handler = new Handler();
-    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,66 +81,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initFacebookLogin() {
-        callbackManager = CallbackManager.Factory.create();
 
-        LoginManager.getInstance().registerCallback(
-                callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        Log.i("TAG,", "onSuccess");
-                        requestLogin();
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        Log.w("TAG,", "onCancel");
-                        onLoginError();
-                    }
-
-                    @Override
-                    public void onError(FacebookException error) {
-                        Log.e("TAG,", "onCancel");
-                        onLoginError();
-                    }
-                }
-        );
-
-        if (AccessToken.getCurrentAccessToken() != null) {
-            findViewById(R.id.login_button).setVisibility(View.GONE);
-            startMainActivityWithDelay();
-        }
     }
 
     private void requestLogin() {
-        Profile profile = Profile.getCurrentProfile();
-        Log.i("TAG", "profile : " + profile.getName());
-        NetworkRequest.requestLogin(
-                profile.getId(),
-                profile.getName(),
-                profile.getProfilePictureUri(500, 500).toString(),
-                new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                onLoginError();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                onLoginSuccess();
-                            }
-                        });
-                    }
-                }
-        );
+        onLoginError();
     }
 
     private void onLoginSuccess() {
@@ -186,7 +117,6 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
 }

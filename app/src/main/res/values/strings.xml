@@ -1,7 +1,4 @@
 <resources>
     <string name="app_name">매시북</string>
 
-    <string name="facebook_app_id">1914748605483726</string>
-    <string name="fb_login_protocol_scheme">fb1914748605483726</string>
-
 </resources>

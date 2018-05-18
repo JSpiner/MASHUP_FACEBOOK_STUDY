@@ -5,24 +5,14 @@ import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
 import java.util.ArrayList;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private PostAdapter postAdapter;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
 
@@ -43,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         initToolbar();
         initRecyclerView();
-        initRefreshLayout();
 
         findViewById(R.id.write).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,70 +50,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
-        postAdapter = new PostAdapter();
 
-        recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(postAdapter);
-    }
-
-    private void initRefreshLayout() {
-        refreshLayout = findViewById(R.id.refresh_layout);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                requestPostList();
-            }
-        });
     }
 
     private void requestPostList() {
-        NetworkRequest.requestPostList(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        onLoadError();
-                    }
-                });
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.code() != 200) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            onLoadError();
-                        }
-                    });
-                    return;
-                }
-                ArrayList<Post> postList = new Gson().fromJson(
-                        response.body().string(),
-                        new TypeToken<ArrayList<Post>>(){}.getType()
-                );
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        onLoaded(postList);
-                    }
-                });
-            }
-        });
+        onLoadError();
     }
 
     private void onLoadError() {
-        refreshLayout.setRefreshing(false);
         findViewById(R.id.network_error).setVisibility(View.VISIBLE);
     }
 
-    private void onLoaded(ArrayList<Post> postList) {
-        refreshLayout.setRefreshing(false);
+    private void onLoaded(ArrayList<Object> postList) {
         findViewById(R.id.network_error).setVisibility(View.GONE);
-        postAdapter.setData(postList);
     }
 
     private void startWriteActivity() {
