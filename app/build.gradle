@@ -16,6 +16,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    repositories {
+        jcenter()
+    }
 }
 
 dependencies {
@@ -31,4 +34,7 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
+    // facebook sdk
+    implementation 'com.facebook.android:facebook-login:[4,5)'
 }
