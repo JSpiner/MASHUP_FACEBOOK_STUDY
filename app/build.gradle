@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     defaultConfig {
         applicationId "net.jspiner.mashup2"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 27
         multiDexEnabled true
         versionCode 1
         versionName "1.0"
@@ -28,7 +28,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:appcompat-v7:27.0.2'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     testImplementation('junit:junit:4.12', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -41,10 +41,10 @@ dependencies {
     })
 
     // recyclerview
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.android.support:recyclerview-v7:27.0.2'
 
     // design support
-    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:design:27.0.2'
 
     // parsing library
     implementation 'com.google.code.gson:gson:2.8.4'
