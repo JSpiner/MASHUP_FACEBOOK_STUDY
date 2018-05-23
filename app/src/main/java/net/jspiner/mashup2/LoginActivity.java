@@ -127,34 +127,38 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void requestLogin() {
-        Profile profile = Profile.getCurrentProfile();
-        Log.i("TAG", "profile : " + profile.getName());
-        NetworkRequest.requestLogin(
-                profile.getId(),
-                profile.getName(),
-                profile.getProfilePictureUri(500, 500).toString(),
-                new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        runOnUiThread(new Runnable() {
+        new ProfileTracker() {
+            @Override
+            protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                Log.i("TAG", "profile : " + currentProfile.getName());
+                NetworkRequest.requestLogin(
+                        currentProfile.getId(),
+                        currentProfile.getName(),
+                        currentProfile.getProfilePictureUri(500, 500).toString(),
+                        new Callback() {
                             @Override
-                            public void run() {
-                                onLoginError();
+                            public void onFailure(Call call, IOException e) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        onLoginError();
+                                    }
+                                });
                             }
-                        });
-                    }
 
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        runOnUiThread(new Runnable() {
                             @Override
-                            public void run() {
-                                onLoginSuccess();
+                            public void onResponse(Call call, Response response) throws IOException {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        onLoginSuccess();
+                                    }
+                                });
                             }
-                        });
-                    }
-                }
-        );
+                        }
+                );
+            }
+        }.startTracking();
     }
 
     private void onLoginSuccess() {
